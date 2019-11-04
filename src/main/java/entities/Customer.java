@@ -10,6 +10,6 @@ public class Customer {
     private Integer id;
     private String name;
     private String surname;
-    private Double age;
+    private String age;
 //    private List<Contact> contacts;
 }

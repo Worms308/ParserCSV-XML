@@ -36,7 +36,7 @@ public class ParserCSV implements Parser {
         result.setSurname(data[1]);
         try {
             Double age = Double.parseDouble(data[2]);
-            result.setAge(age);
+            //result.setAge(age);
         } catch (NumberFormatException ex) {
             result.setAge(null);
         }

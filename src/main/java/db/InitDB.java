@@ -1,6 +1,11 @@
 package db;
 
+import db.dao.ContactsDAO;
+import db.dao.CustomersDAO;
+import entities.Customer;
+
 import java.sql.*;
+import java.util.List;
 import java.util.Random;
 
 public class InitDB {
@@ -32,7 +37,7 @@ public class InitDB {
         statement.execute("DROP TABLE IF EXISTS customers");
 
         String command =
-                "CREATE TABLE customers (id INT AUTO_INCREMENT,name VARCHAR(50) NOT NULL, surname VARCHAR(50) NOT NULL, age int," +
+                "CREATE TABLE customers (id INT AUTO_INCREMENT,name VARCHAR(50) NOT NULL, surname VARCHAR(50) NOT NULL, age VARCHAR(3)," +
                         "PRIMARY KEY (id))";
         statement.execute(command);
         statement.close();
@@ -54,34 +59,16 @@ public class InitDB {
         statement.close();
     }
 
-    private void insertCustomer(String name, String surname, Integer age) throws SQLException {
-        Statement statement = connection.createStatement();
-        String customers = "INSERT INTO customers(name, surname, age) VALUES ('" +
-                name + "', '" +
-                surname + "', " +
-                age + ")";
-        statement.executeUpdate(customers);
-//        ResultSet set = statement.executeQuery("SELECT LAST_INSERT_ID() id");
-//        if (set.next())
-//            System.err.println(set.getInt(1));
-    }
-
-    private void insertContact(Integer idCustomer, String type, String contact) throws SQLException {
-        Statement statement = connection.createStatement();
-        String customers = "INSERT INTO contacts(id_customer, type, contact) VALUES (" +
-                idCustomer + ", '" +
-                type + "', '" +
-                contact + "')";
-        statement.executeUpdate(customers);
-    }
-
     public boolean fillWithMocks() throws SQLException {
+        CustomersDAO customersDAO = new CustomersDAO();
         for (int i = 0; i < 5; ++i) {
-            insertCustomer("Jan", "Pawłecki", i*5);
+            customersDAO.insert("Jan", "Pawłecki", i*5);
         }
+
         Random random = new Random();
+        ContactsDAO contactsDAO = new ContactsDAO();
         for (int i=0;i<10;++i){
-            insertContact(random.nextInt(5) + 1, "1", "Skype");
+            contactsDAO.insert(random.nextInt(5) + 1, "1", "Skype");
         }
 
         return true;
@@ -90,11 +77,10 @@ public class InitDB {
     public void printDB() throws SQLException {
         Statement statement = connection.createStatement();
         ResultSet set = statement.executeQuery("SELECT * FROM customers");
-        while (set.next()){
-            System.err.println(set.getInt(1) + " " + set.getString(2) +
-                    " " + set.getString(3) + " " + set.getString(4));
-        }
-        statement.close();
+
+        CustomersDAO customersDAO = new CustomersDAO();
+        List<Customer> customers = customersDAO.selectAll();
+        customers.forEach(System.err::println);
 
         System.err.println("----------------------");
 
