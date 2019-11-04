@@ -2,6 +2,8 @@ package db;
 
 import db.dao.ContactsDAO;
 import db.dao.CustomersDAO;
+import entities.Contact;
+import entities.ContactType;
 import entities.Customer;
 
 import java.sql.*;
@@ -68,7 +70,7 @@ public class InitDB {
         Random random = new Random();
         ContactsDAO contactsDAO = new ContactsDAO();
         for (int i=0;i<10;++i){
-            contactsDAO.insert(random.nextInt(5) + 1, "1", "Skype");
+            contactsDAO.insert(random.nextInt(5) + 1, ContactType.JABBER, "Skype");
         }
 
         return true;
@@ -84,12 +86,8 @@ public class InitDB {
 
         System.err.println("----------------------");
 
-        statement = connection.createStatement();
-        set = statement.executeQuery("SELECT * FROM contacts");
-        while (set.next()){
-            System.err.println(set.getInt(1) + " " + set.getInt(2) +
-                    " " + set.getString(3) + " " + set.getString(4));
-        }
-        statement.close();
+        ContactsDAO contactsDAO = new ContactsDAO();
+        List<Contact> contacts = contactsDAO.selectAll();
+        contacts.forEach(System.err::println);
     }
 }

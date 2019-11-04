@@ -46,8 +46,17 @@ public class CustomersDAO extends Dao {
         return resultSet;
     }
 
-    public void selectById(){
+    public Customer selectById(int id) throws SQLException {
+        Statement statement = connection.createStatement();
+        ResultSet set = statement.executeQuery("SELECT * FROM customers WHERE id =" + id);
 
+        Customer resultSet = null;
+        if (set.next())
+            resultSet = createCustomer(set);
+        
+        statement.close();
+
+        return resultSet;
     }
 
 }
