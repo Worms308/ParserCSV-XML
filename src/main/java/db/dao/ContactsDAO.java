@@ -48,6 +48,16 @@ public class ContactsDAO extends Dao {
         statement.close();
     }
 
+    public void insert(Contact contact) throws SQLException {
+        Statement statement = connection.createStatement();
+        String customers = "INSERT INTO contacts(id_customer, type, contact) VALUES (" +
+                contact.getIdCustomer() + ", '" +
+                contact.getType().getValue() + "', '" +
+                contact.getContact() + "')";
+        statement.executeUpdate(customers);
+        statement.close();
+    }
+
     public List<Contact> selectAll() throws SQLException {
         Statement statement = connection.createStatement();
         ResultSet set = statement.executeQuery("SELECT * FROM contacts");

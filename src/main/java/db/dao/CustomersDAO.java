@@ -33,6 +33,16 @@ public class CustomersDAO extends Dao {
         statement.close();
     }
 
+    public void insert(Customer customer) throws SQLException {
+        Statement statement = connection.createStatement();
+        String customers = "INSERT INTO customers(name, surname, age) VALUES ('" +
+                customer.getName() + "', '" +
+                customer.getSurname() + "', " +
+                customer.getAge() + ")";
+        statement.executeUpdate(customers);
+        statement.close();
+    }
+
     public List<Customer> selectAll() throws SQLException {
         Statement statement = connection.createStatement();
         ResultSet set = statement.executeQuery("SELECT * FROM customers");
@@ -53,7 +63,7 @@ public class CustomersDAO extends Dao {
         Customer resultSet = null;
         if (set.next())
             resultSet = createCustomer(set);
-        
+
         statement.close();
 
         return resultSet;

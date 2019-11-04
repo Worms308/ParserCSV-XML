@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ParserXML implements Parser {
     @Override
-    public void parseFile(String filename, List<Customer> customers, List<Contact> contacts) {
+    public void parseFile(String filename) {
 
     }
 

@@ -15,15 +15,13 @@ public class InitDB {
     private Connection connection;
 
     public boolean initDatabase(String connectionString, String user, String password) {
-
         try {
             Connection conn = DriverManager.getConnection("jdbc:h2:~/rekrutacja", "sa", "");
             connection = conn;
             createCustomers();
             createContacts();
-
-            fillWithMocks();
-            printDB();
+//            fillWithMocks();
+//            printDB();
 
             conn.close();
         } catch (SQLException e) {

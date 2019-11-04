@@ -7,6 +7,6 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 public interface Parser {
-    void parseFile(String filename, List<Customer> customers, List<Contact> contacts) throws FileNotFoundException;
+    void parseFile(String filename) throws FileNotFoundException;
     List<String> getExtensions();
 }
