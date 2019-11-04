@@ -1,7 +1,4 @@
-package parsers;
-
-import entities.Contact;
-import entities.Customer;
+package interpreters;
 
 import java.io.FileNotFoundException;
 import java.util.List;

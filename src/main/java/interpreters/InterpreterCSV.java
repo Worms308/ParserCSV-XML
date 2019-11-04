@@ -1,10 +1,10 @@
-package parsers;
+package interpreters;
 
 import db.dao.ContactsDAO;
 import db.dao.CustomersDAO;
 import entities.Contact;
 import entities.Customer;
-import parsers.utils.ParserContact;
+import interpreters.utils.ParserContact;
 
 import java.io.File;
 import java.io.FileNotFoundException;
