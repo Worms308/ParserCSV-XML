@@ -10,7 +10,7 @@ public class ParserContact {
             return ContactType.EMAIL;
         if (contact.matches("(?<!\\w)(\\(?(\\+|00)?48\\)?)?[ -]?\\d{3}[ -]?\\d{3}[ -]?\\d{3}(?!\\w)"))
             return ContactType.PHONE;
-        if (contact.matches("^(?:([^@/<>'\\\"]+)@)?([^@/<>'\\\"]+)(?:/([^<>'\\\"]*))?$"))
+        if (contact.matches("^\\A([a-z0-9\\.\\-_\\+]+)@((?:[-a-z0-9]+\\.)+[a-z]{2,})\\Z$"))
             return ContactType.JABBER;
         return ContactType.UNKNOWN;
     }

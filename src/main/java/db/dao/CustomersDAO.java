@@ -20,25 +20,28 @@ public class CustomersDAO extends Dao {
         customer.setName(resultSet.getString(2));
         customer.setSurname(resultSet.getString(3));
         customer.setAge(resultSet.getString(4));
+        customer.setCity(resultSet.getString(5));
         return customer;
     }
 
-    public void insert(String name, String surname, Integer age) throws SQLException {
+    public void insert(String name, String surname, Integer age, String city) throws SQLException {
         Statement statement = connection.createStatement();
-        String customers = "INSERT INTO customers(name, surname, age) VALUES ('" +
+        String customers = "INSERT INTO customers(name, surname, age, city) VALUES ('" +
                 name + "', '" +
                 surname + "', " +
-                age + ")";
+                age + ", '" +
+                city + "')";
         statement.executeUpdate(customers);
         statement.close();
     }
 
     public void insert(Customer customer) throws SQLException {
         Statement statement = connection.createStatement();
-        String customers = "INSERT INTO customers(name, surname, age) VALUES ('" +
+        String customers = "INSERT INTO customers(name, surname, age, city) VALUES ('" +
                 customer.getName() + "', '" +
                 customer.getSurname() + "', " +
-                customer.getAge() + ")";
+                customer.getAge() + ", '" +
+                customer.getCity() +"')";
         statement.executeUpdate(customers);
         statement.close();
     }

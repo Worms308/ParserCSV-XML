@@ -37,7 +37,7 @@ public class InitDB {
         statement.execute("DROP TABLE IF EXISTS customers");
 
         String command =
-                "CREATE TABLE customers (id INT AUTO_INCREMENT,name VARCHAR(50) NOT NULL, surname VARCHAR(50) NOT NULL, age VARCHAR(3)," +
+                "CREATE TABLE customers (id INT AUTO_INCREMENT,name VARCHAR(50) NOT NULL, surname VARCHAR(50) NOT NULL, age VARCHAR(3), city VARCHAR(50) NOT NULL, " +
                         "PRIMARY KEY (id))";
         statement.execute(command);
         statement.close();
@@ -62,7 +62,7 @@ public class InitDB {
     public boolean fillWithMocks() throws SQLException {
         CustomersDAO customersDAO = new CustomersDAO();
         for (int i = 0; i < 5; ++i) {
-            customersDAO.insert("Jan", "Pawłecki", i*5);
+            customersDAO.insert("Jan", "Pawłecki", i*5, "Warszawa");
         }
 
         Random random = new Random();

@@ -4,6 +4,7 @@ import db.dao.ContactsDAO;
 import db.dao.CustomersDAO;
 import entities.Contact;
 import entities.Customer;
+import parsers.utils.ParserContact;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,7 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
-public class ParserCSV implements Parser {
+public class InterpreterCSV implements Interpreter {
 
     private List<String[]> loadCSV(String filename, String separator) throws FileNotFoundException {
         File file = new File(filename);
@@ -37,21 +38,24 @@ public class ParserCSV implements Parser {
         Customer result = new Customer();
         result.setName(data[0]);
         result.setSurname(data[1]);
-        result.setAge(data[2]);
+        result.setAge(data[2].length() > 0 ? data[2] : null);
+        result.setCity(data[3]);
 
         return result;
     }
 
     private List<Contact> createContacts(Integer customerId, String[] data) {
         List<Contact> result = new ArrayList<>();
-
-        for (int i = 3; i < data.length; ++i) {
+        ParserContact parserContact = new ParserContact();
+        for (int i = 4; i < data.length; ++i) {
             Contact tmp = new Contact();
-            tmp.setIdCustomer(customerId);
-            tmp.setContact(data[i]);
-            //tmp.setType(data[]);
-        }
 
+            tmp.setIdCustomer(customerId);
+            tmp.setType(parserContact.parse(data[i]));
+            tmp.setContact(data[i]);
+
+            result.add(tmp);
+        }
         return result;
     }
 

@@ -11,5 +11,6 @@ public class Customer {
     private String name;
     private String surname;
     private String age;
+    private String city;
 //    private List<Contact> contacts;
 }

@@ -1,12 +1,9 @@
 package parsers;
 
-import entities.Contact;
-import entities.Customer;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParserXML implements Parser {
+public class InterpreterXML implements Interpreter {
     @Override
     public void parseFile(String filename) {
 
