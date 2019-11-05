@@ -1,4 +1,4 @@
-package interpreters.utils;
+package parsers.utils;
 
 import entities.ContactType;
 

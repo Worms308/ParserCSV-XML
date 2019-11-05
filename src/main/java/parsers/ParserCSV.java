@@ -1,10 +1,10 @@
-package interpreters;
+package parsers;
 
-import db.dao.ContactsDAO;
-import db.dao.CustomersDAO;
+import entities.dao.ContactsDAO;
+import entities.dao.CustomersDAO;
 import entities.Contact;
 import entities.Customer;
-import interpreters.utils.ParserContact;
+import parsers.utils.ParserContact;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,7 +14,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
-public class InterpreterCSV implements Interpreter {
+public class ParserCSV implements Parser {
+    private static final int NAME = 0;
+    private static final int SURNAME = 1;
+    private static final int AGE = 2;
+    private static final int CITY = 3;
+    private static final int CONTACTS = 4;
 
     private List<String[]> loadCSV(String filename, String separator) throws FileNotFoundException {
         File file = new File(filename);
@@ -36,10 +41,10 @@ public class InterpreterCSV implements Interpreter {
 
     private Customer createCustomer(String[] data) {
         Customer result = new Customer();
-        result.setName(data[0]);
-        result.setSurname(data[1]);
-        result.setAge(data[2].length() > 0 ? data[2] : null);
-        result.setCity(data[3]);
+        result.setName(data[NAME]);
+        result.setSurname(data[SURNAME]);
+        result.setAge(data[AGE].length() > 0 ? data[AGE] : null);
+        result.setCity(data[CITY]);
 
         return result;
     }
@@ -47,7 +52,7 @@ public class InterpreterCSV implements Interpreter {
     private List<Contact> createContacts(Integer customerId, String[] data) {
         List<Contact> result = new ArrayList<>();
         ParserContact parserContact = new ParserContact();
-        for (int i = 4; i < data.length; ++i) {
+        for (int i = CONTACTS; i < data.length; ++i) {
             Contact tmp = new Contact();
 
             tmp.setIdCustomer(customerId);

@@ -1,4 +1,4 @@
-package db.dao;
+package entities.dao;
 
 import java.sql.*;
 

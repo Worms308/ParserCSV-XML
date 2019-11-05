@@ -1,27 +1,27 @@
 package service;
 
 import exceptions.ExtensionNotSupportedException;
-import interpreters.Interpreter;
+import parsers.Parser;
 
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class FileInterpreter {
+public class ParsersMediator {
 
-    private List<Interpreter> interpreters = new LinkedList<>();
-    public FileInterpreter(){
+    private List<Parser> parsers = new LinkedList<>();
+    public ParsersMediator(){
 
     }
 
-    public void addInterpreter(Interpreter interpreter){
-        this.interpreters.add(interpreter);
+    public void addParser(Parser parser){
+        this.parsers.add(parser);
     }
 
     public boolean loadFile(String filename) throws FileNotFoundException, ExtensionNotSupportedException {
         String extension = filename.substring(filename.lastIndexOf("."));
 
-        for (Interpreter it : interpreters){
+        for (Parser it : parsers){
             if (it.getExtensions().contains(extension)){
                 it.parseFile(filename);
                 return true;
