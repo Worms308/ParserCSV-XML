@@ -4,13 +4,14 @@ import entities.dao.CustomersDAO;
 import parsers.ParserCSV;
 import parsers.ParserXML;
 import service.ParsersMediator;
+import ui.UserInterface;
 
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
 public class Main {
 
-    public static void main(String[] args) throws FileNotFoundException, SQLException {
+    public static void main(String[] args) {
         InitDB initDB = new InitDB();
         initDB.initDatabase("jdbc:h2:~/rekrutacja", "sa","");
 
@@ -18,21 +19,8 @@ public class Main {
         ParsersMediator mediator = new ParsersMediator();
         mediator.addParser(new ParserCSV());
         mediator.addParser(new ParserXML());
-        mediator.loadFile("dane-osoby.xml");
-        mediator.loadFile("dane-osoby.txt");
-        long start = System.nanoTime();
-        mediator.loadFile("dane-osoby-copy.xml");
-        long end = System.nanoTime();
 
-        CustomersDAO customersDAO = new CustomersDAO();
-//        customersDAO.selectAll().forEach(System.out::println);
-
-        System.out.println("----");
-
-        ContactsDAO contactsDAO = new ContactsDAO();
-//        contactsDAO.selectAll().forEach(System.out::println);
-
-
-        System.err.println("Czas dodawania danych: " + (end - start)/1000000000.0 + "s");
+        UserInterface userInterface = new UserInterface(mediator);
+        userInterface.mainLoop();
     }
 }

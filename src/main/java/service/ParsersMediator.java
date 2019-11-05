@@ -19,7 +19,10 @@ public class ParsersMediator {
     }
 
     public boolean loadFile(String filename) throws FileNotFoundException, ExtensionNotSupportedException {
-        String extension = filename.substring(filename.lastIndexOf("."));
+        int index = filename.lastIndexOf(".");
+        if (index == -1)
+            throw new ExtensionNotSupportedException("Extension not supported.");
+        String extension = filename.substring(index);
 
         for (Parser it : parsers){
             if (it.getExtensions().contains(extension)){

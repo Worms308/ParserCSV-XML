@@ -19,8 +19,6 @@ public class InitDB {
             connection = DriverManager.getConnection("jdbc:h2:~/rekrutacja", "sa", "");
             createCustomers();
             createContacts();
-//            fillWithMocks();
-//            printDB();
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -57,33 +55,4 @@ public class InitDB {
         statement.close();
     }
 
-//    public boolean fillWithMocks() throws SQLException {
-//        CustomersDAO customersDAO = new CustomersDAO();
-//        for (int i = 0; i < 5; ++i) {
-//            customersDAO.insert("Jan", "Pawłecki", i*5, "Warszawa");
-//        }
-//
-//        Random random = new Random();
-//        ContactsDAO contactsDAO = new ContactsDAO();
-//        for (int i=0;i<10;++i){
-//            contactsDAO.insert(random.nextInt(5) + 1, ContactType.JABBER, "Skype");
-//        }
-//
-//        return true;
-//    }
-//
-//    public void printDB() throws SQLException {
-//        Statement statement = connection.createStatement();
-//        ResultSet set = statement.executeQuery("SELECT * FROM customers");
-//
-//        CustomersDAO customersDAO = new CustomersDAO();
-//        List<Customer> customers = customersDAO.selectAll();
-//        customers.forEach(System.err::println);
-//
-//        System.err.println("----------------------");
-//
-//        ContactsDAO contactsDAO = new ContactsDAO();
-//        List<Contact> contacts = contactsDAO.selectAll();
-//        contacts.forEach(System.err::println);
-//    }
 }
