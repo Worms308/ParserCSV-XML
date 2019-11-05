@@ -135,6 +135,7 @@ public class UserInterface {
         System.out.println(" 2. Wyświetl dane z tabeli Customers");
         System.out.println(" 3. Wyświetl dane z tabeli Contacts");
         System.out.println(" 4. Wyświetl osobę wraz z jego kontaktami.");
+        System.out.println("\n 0. Wyjście z programu.");
 //        System.out.println(" 5. Ręczne wprowadzanie zapytań SQL. (Niezalecane)");
     }
 
@@ -146,6 +147,8 @@ public class UserInterface {
             command = commandPrompt(scanner);
 
             switch (command.trim()) {
+                case "0":
+                    System.exit(0);
                 case "1":
                     this.printCommandState(this.loadFile());
                     break;
