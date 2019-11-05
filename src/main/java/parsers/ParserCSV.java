@@ -68,9 +68,7 @@ public class ParserCSV implements Parser {
     public void parseFile(String filename) throws FileNotFoundException {
         List<String[]> loadedFile = loadCSV(filename, ",");
 
-        try {
-            CustomersDAO customersDAO = new CustomersDAO();
-            ContactsDAO contactsDAO = new ContactsDAO();
+        try (CustomersDAO customersDAO = new CustomersDAO(); ContactsDAO contactsDAO = new ContactsDAO()){
             Iterator<String[]> it = loadedFile.iterator();
             while (it.hasNext()) {
                 String[] row = it.next();

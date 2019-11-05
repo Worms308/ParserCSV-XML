@@ -1,14 +1,6 @@
 package db;
 
-import entities.dao.ContactsDAO;
-import entities.dao.CustomersDAO;
-import entities.Contact;
-import entities.ContactType;
-import entities.Customer;
-
 import java.sql.*;
-import java.util.List;
-import java.util.Random;
 
 public class InitDB {
 
@@ -53,6 +45,15 @@ public class InitDB {
                 "ALTER TABLE contacts ADD FOREIGN KEY (id_customer) REFERENCES customers(id)";
         statement.execute(foreignKey);
         statement.close();
+    }
+
+    public ResultSet createQuery(String query) throws SQLException {
+        connection = DriverManager.getConnection("jdbc:h2:~/rekrutacja", "sa", "");
+        Statement statement = connection.createStatement();
+        ResultSet set = statement.executeQuery(query);
+        statement.close();
+        connection.close();
+        return set;
     }
 
 }

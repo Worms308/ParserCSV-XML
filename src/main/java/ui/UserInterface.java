@@ -53,8 +53,7 @@ public class UserInterface {
     }
 
     private boolean printAllCustomers() {
-        try {
-            CustomersDAO customersDAO = new CustomersDAO();
+        try (CustomersDAO customersDAO = new CustomersDAO()) {
             List<Customer> customers = customersDAO.selectAll();
             this.printPersons(customers);
         } catch (SQLException e) {
@@ -72,8 +71,7 @@ public class UserInterface {
     }
 
     private boolean printAllContacts() {
-        try {
-            ContactsDAO contactsDAO = new ContactsDAO();
+        try (ContactsDAO contactsDAO = new ContactsDAO()) {
             List<Contact> contacts = contactsDAO.selectAll();
             this.printContacts(contacts);
         } catch (SQLException e) {
@@ -91,9 +89,7 @@ public class UserInterface {
     }
 
     private boolean printPersonWithContacts(Scanner scanner) {
-        try {
-            CustomersDAO customersDAO = new CustomersDAO();
-            ContactsDAO contactsDAO = new ContactsDAO();
+        try (CustomersDAO customersDAO = new CustomersDAO(); ContactsDAO contactsDAO = new ContactsDAO()) {
             System.out.print("Podaj ID szukanej osoby: ");
             int id = scanner.nextInt();
             Customer customer = customersDAO.selectById(id);
@@ -116,13 +112,30 @@ public class UserInterface {
         return true;
     }
 
+//    private boolean createQuery(Scanner scanner){
+//        System.out.println("Wprowadź zapytanie SQL zgodne z dialektem bazy danych H2 w wersji \"1.4.197\"");
+//        String query = scanner.next();
+//        InitDB db = new InitDB();
+//        try {
+//            ResultSet set = db.createQuery(query);
+//            while (set.next()){
+//                System.out.println(set);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            System.err.println("Błąd SQL: " + e.getStackTrace());
+//            return false;
+//        }
+//        return true;
+//    }
+
     private void printMenu() {
         System.out.println(" --- Wczytywanie plików do bazy danych --- ");
         System.out.println(" 1. Wczytaj plik do bazy danych.");
         System.out.println(" 2. Wyświetl dane z tabeli Customers");
         System.out.println(" 3. Wyświetl dane z tabeli Contacts");
         System.out.println(" 4. Wyświetl osobę wraz z jego kontaktami.");
-        System.out.println(" 5. Ręczne wprowadzanie zapytań SQL.");
+//        System.out.println(" 5. Ręczne wprowadzanie zapytań SQL. (Niezalecane)");
     }
 
     public void mainLoop() {
@@ -145,8 +158,9 @@ public class UserInterface {
                 case "4":
                     this.printCommandState(this.printPersonWithContacts(scanner));
                     break;
-                case "5":
-                    break;
+//                case "5":
+//                    this.printCommandState(this.createQuery(scanner));
+//                    break;
                 default:
                     System.err.println("Komenda nie rozpoznana!");
             }

@@ -2,12 +2,20 @@ package entities.dao;
 
 import java.sql.*;
 
-public abstract class Dao {
+public abstract class Dao implements AutoCloseable{
 
     protected static Connection connection;
 
     public Dao() throws SQLException {
         connection = DriverManager.getConnection("jdbc:h2:~/rekrutacja", "sa", "");
+    }
+
+    public void close(){
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public int getLastInsertedId() throws SQLException {

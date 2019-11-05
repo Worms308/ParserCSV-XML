@@ -96,36 +96,36 @@ public class ParserXML implements Parser {
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
-    private void insertPerson(Scanner scanner) throws SQLException {
-        CustomersDAO customersDAO = new CustomersDAO();
-        ContactsDAO contactsDAO = new ContactsDAO();
-        String line;
-        Customer customer = new Customer();
-        while (scanner.hasNextLine()) {
-            line = scanner.nextLine();
-            if (getTag(line).equals("/person"))
-                break;
+    private void insertPerson(Scanner scanner) {
+        try (CustomersDAO customersDAO = new CustomersDAO(); ContactsDAO contactsDAO = new ContactsDAO()) {
+            String line;
+            Customer customer = new Customer();
+            while (scanner.hasNextLine()) {
+                line = scanner.nextLine();
+                if (getTag(line).equals("/person"))
+                    break;
 
-            this.setParameter(customer, line);
+                this.setParameter(customer, line);
 
-            if (getTag(line).equals("contacts")){
-                customersDAO.insert(customer);
-                int personId = customersDAO.getLastInsertedId();
-                while (scanner.hasNextLine()){
-                    line = scanner.nextLine();
-                    if (getTag(line).equals("/contacts"))
-                        break;
+                if (getTag(line).equals("contacts")) {
+                    customersDAO.insert(customer);
+                    int personId = customersDAO.getLastInsertedId();
+                    while (scanner.hasNextLine()) {
+                        line = scanner.nextLine();
+                        if (getTag(line).equals("/contacts"))
+                            break;
 
-                    Contact contact = createContact(line, personId);
-                    contactsDAO.insert(contact);
+                        Contact contact = createContact(line, personId);
+                        contactsDAO.insert(contact);
+                    }
                 }
-            }
 
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
 
